@@ -1,0 +1,22 @@
+{
+  "name": "live-dev-server",
+  "main": "bin/index.js",
+  "dependencies": {
+    "express": "^5.1.0"
+  },
+  "keywords": [
+    "cli"
+  ],
+  "bin": {
+    "lds": "bin/index.js"
+  },
+  "type": "module",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "version": "1.0.0",
+  "description": "A live web server for development",
+  "devDependencies": {},
+  "author": "",
+  "license": "MIT"
+}
