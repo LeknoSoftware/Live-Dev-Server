@@ -1,9 +1,14 @@
 import chokidar from "chokidar";
 import chalk from "chalk";
 
-import {Server, getDetails} from "./index.js";
+import {Server, getDetails, options, getOptions} from "./index.js";
 
 function run(args){
+    const optionArgs = getOptions(args); 	
+    options(optionArgs);
+    if(! args[2]){
+        return;
+    }		
     const server = new Server();	
     getDetails(server, args);
     server.run();

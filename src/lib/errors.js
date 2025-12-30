@@ -10,6 +10,13 @@ class NoFileEnteredError extends Error{
         super(message);
         this.name = "NoFileEnteredError";
     }
+}
+
+class InvalidOptionError extends Error{
+    constructor(message){
+        super(message);
+        this.name = "InvalidOptionError";
+    }
 }	
 
-export {CannotRunServerError, NoFileEnteredError};
+export {CannotRunServerError, NoFileEnteredError, InvalidOptionError};

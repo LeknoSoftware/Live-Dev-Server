@@ -1,0 +1,9 @@
+Usage:
+
+lds <abc> ....................... load the file <abc> on port 3000(default)
+lds <abc> <port> ................ load the file <abc> on port <port>
+
+Examples:
+$ lds index.html 
+$ lds index.html 5000
+     
