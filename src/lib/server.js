@@ -1,8 +1,10 @@
 import process from "process";
+import fs from "node:fs";
 import express from "express";
 import chalk from "chalk";
 
-import {CannotRunServerError} from "./errors.js"
+import {CannotRunServerError} from "./errors.js";
+import {CannotFindFileError} from "./errors.js";
 
 class Server{
     static app = express();
@@ -10,15 +12,17 @@ class Server{
 
     constructor(){
         this.PORT = 3000;
-        this.fileName = undefined;	
+        this.file = undefined;	
     }
     // Method to run the server
     run(){
         const __dirname = process.cwd();
+	if(! fs.existsSync(__dirname + "/" + this.file)){
+            throw new CannotFindFileError(`Cannot find the file in ${__dirname + "/" + this.file}`);
+        }	    
         Server.app.get('/', (req, res) => {
-            res.sendFile(__dirname + `/${this.fileName}`);
-        });
-
+            res.sendFile(__dirname + `/${this.file}`);
+        });	
         Server.listener = Server.app.listen(this.PORT, (error) => {
             if(! error){
                 const msg = chalk.green(`Started live dev server at port ${this.PORT}.`);	
@@ -33,7 +37,7 @@ class Server{
     rerun(){
         const __dirname = process.cwd();
         Server.app.get('/', (req, res) => {
-            res.sendFile(__dirname + `/${this.fileName}`);
+            res.sendFile(__dirname + `/${this.file}`);
         });		
         Server.listener = Server.app.listen(this.PORT, (error) => {
             if(! error){

@@ -5,8 +5,8 @@ const supported = ["--help", "-h"];
 
 
 function options(optionArgs){
-	checkOptions(optionArgs)
-	const __dirname = import.meta.dirname;	
+    checkOptions(optionArgs)
+    const __dirname = import.meta.dirname;	
     if(optionArgs.includes("--help") || optionArgs.includes("-h")){
         const help = readDoc(__dirname + "/../../docs/help.txt");
         console.log(help);

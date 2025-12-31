@@ -1,23 +1,18 @@
 import fs from "node:fs";
 import chalk from "chalk";
 
-import {NoFileEnteredError} from "./errors.js"
-
 // To fetch details about file and server from the command line arguments
-function getDetails(Server, args){
-    if(! args[2]){
-        throw new NoFileEnteredError("Cannot get the file to run.");  
-    }
-    else{
-        Server.file = args[2];
+function getDetails(server, args){
+    if(args[2]){
+        server.file = args[2];  
     }		
     if(! args[3]){
         let msg = chalk.yellow("Trying to start server at port 3000....");
         console.log(msg);	
     }
     else{    
-        Server.PORT = args[3];
-        let msg = chalk.yellow(`Trying to start server at port ${Server.PORT}`);
+        server.PORT = args[3];
+        let msg = chalk.yellow(`Trying to start server at port ${server.PORT}`);
         console.log(msg);    
     }		
 }		
@@ -39,7 +34,7 @@ function getOptions(args){
     let i = 0;
     while(i < args.length && i >= 0){
         if(args[i][0] == '-'){
-			optionArgs.push(args[i]);
+            optionArgs.push(args[i]);
             args.splice(i, 1);	
             i --;
         }

@@ -5,10 +5,10 @@ class CannotRunServerError extends Error{
     }
 }
 
-class NoFileEnteredError extends Error{
+class CannotFindFileError extends Error{
     constructor(message){
         super(message);
-        this.name = "NoFileEnteredError";
+        this.name = "CannotFindFileError";
     }
 }
 
@@ -19,4 +19,4 @@ class InvalidOptionError extends Error{
     }
 }	
 
-export {CannotRunServerError, NoFileEnteredError, InvalidOptionError};
+export {CannotRunServerError, CannotFindFileError, InvalidOptionError};
