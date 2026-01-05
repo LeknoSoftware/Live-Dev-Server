@@ -1,7 +1,9 @@
+import {WebSocketServer} from "ws"; 
 import chokidar from "chokidar";
 import chalk from "chalk";
 
-import {Server, getDetails, options, getOptions} from "./index.js";
+import {Server, getDetails, options} from "./index.js";
+import {getOptions, sendMsg} from "./index.js";
 
 function run(args){
     const optionArgs = getOptions(args); 	
@@ -13,32 +15,21 @@ function run(args){
     }
     if(! args[2]){
         return;
-    }		
+    }	
+    const socketServer = new WebSocketServer({port: 8080});	
     const server = new Server();	
     getDetails(server, args);
     server.run();
-    // Rerun the server each time any change takes place	
-    chokidar.watch('.', {
+    chokidar.watch('.',{
         ignoreInitial: true,
+        awaitWriteFinish: true,
+        usePolling: true,
+        interval: 10,    
     }).on('all', () => {
-        server.close();	
-        rerun(server);
-        return;
+        const msg = chalk.italic("Changes detected, reloading page");    
+        console.log(msg);    
+        sendMsg(socketServer, "refresh");	
     });	
-}
-
-function rerun(server){
-    const msg = chalk.yellow(`Trying to restart server at port ${server.PORT}....`);
-    console.log(msg);	
-    server.rerun();
-    // Rerun the server each time any change takes place	
-    chokidar.watch('.', {
-        ignoreInitial: true,
-    }).on('all', () => {
-        server.close();	
-        rerun(server);
-        return;
-    });
 }
 
 export default run;

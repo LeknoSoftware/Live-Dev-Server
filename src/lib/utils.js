@@ -1,4 +1,5 @@
 import fs from "node:fs";
+import WebSocket from "ws";
 import chalk from "chalk";
 
 // To fetch details about file and server from the command line arguments
@@ -28,6 +29,24 @@ function readDoc(path){
     }	
 }
 
+// To ensure reading when race condition can occur
+// If the path does not exist the program will run indefinitely
+function raceRead(path){
+    let flag = true;
+    let data;	
+    while(flag){
+        try{
+            data = readDoc(path);
+            return data; 
+        }
+        catch{
+            // Do nothing
+            flag = true;
+        }	
+    }
+    return data;
+}	
+
 // To get command line options
 function getOptions(args){
     let optionArgs = [];	
@@ -43,5 +62,15 @@ function getOptions(args){
         }
     }	
     return optionArgs;
-}	
-export {getDetails, readDoc, getOptions};
+}
+
+//To send message
+function sendMsg(socketServer, msg){
+    socketServer.clients.forEach((client) => {
+        if (client.readyState === WebSocket.OPEN) {
+            client.send(msg);
+        }
+    });
+}		
+
+export {getDetails, readDoc, getOptions, sendMsg, raceRead};
