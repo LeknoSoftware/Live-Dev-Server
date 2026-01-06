@@ -9,7 +9,7 @@ function run(args){
     const optionArgs = getOptions(args);
     options(optionArgs);
     if(! args[2] && optionArgs.length == 0){
-        const msg = "Nothing specified, run 'hc --help' for more";
+        const msg = "This is housecat, run 'hc --help' for more";
         console.log(msg);
         return;
     }

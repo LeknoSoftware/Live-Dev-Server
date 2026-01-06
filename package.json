@@ -12,7 +12,11 @@
     "ws": "^8.18.3"
   },
   "keywords": [
-    "cli"
+    "cli",
+    "reload",
+    "web",
+    "live",
+    "server"
   ],
   "bin": {
     "hc": "bin/index.js"
