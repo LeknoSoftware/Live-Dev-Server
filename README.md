@@ -1,48 +1,48 @@
-# Live Dev Server
-Live server for developing web software. 
+# Housecat
+Housecat is a live server for developing web software. 
 Built using *Node.js*.
 
 ## Why?
-**Live Dev Server** is developed with the aim of it being a server for web development.
+**Housecat** is developed with the aim of it being a server for web development.
 It reloads the webpage each time any change occurs in the directory.  
-It provides a command line tool named `live`.
+It provides a command line tool named `hc`.
 
 ## Installation
 **Using npm**(recommended):
 - Run this command in the terminal
 ```sh
-npm install -g live-dev-server
+npm install -g housecat
 ```
 **From GitHub**:
 - Run this command
 ```sh
-git clone https://github.com/LeknoSoftware/Live-Dev-Server.git
+git clone https://github.com/LeknoSoftware/housecat.git
 ```
 - Navigate to the project directory
 ```sh
-cd Live-Dev-Server
+cd housecat
 ```
-- Install `Live Dev Server` globally
+- Install `housecat` globally
 ```sh
 npm install -g
 ```
 ## Usage
-Live Dev Server provides a command line tool named `live`.   
+Housecat provides a command line tool named `hc`.   
 
 Navigate to your project directory.  
 To run a file, say `path/to/index.html`, just run the command:
 ```sh
-live path/to/index.html
+hc path/to/index.html
 ```
 By default port *3000* is used.  
 
 To use any other port, say *5000* for the file `path/to/index.html`, just run:
 ```sh
-live path/to/index.html 5000
+hc path/to/index.html 5000
 ```
 For help, run:
 ```sh
-live --help
+hc --help
 ```
 #### Accessing the webpage
 Open the specified port in your browser.  
@@ -54,3 +54,4 @@ That's it! All your changes will get reflected without manual reloading.
 
 ## LICENSE
 This project is MIT licensed. See the [LICENSE](LICENSE) file.
+
