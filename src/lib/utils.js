@@ -5,62 +5,62 @@ import chalk from "chalk";
 // To fetch details about file and server from the command line arguments
 function getDetails(server, args){
     if(args[2]){
-        server.file = args[2];  
-    }		
+        server.file = args[2];
+    }
     if(! args[3]){
         let msg = chalk.yellow("Trying to start server at port 3000....");
-        console.log(msg);	
+        console.log(msg);
     }
-    else{    
+    else{
         server.PORT = args[3];
         let msg = chalk.yellow(`Trying to start server at port ${server.PORT}`);
-        console.log(msg);    
-    }		
-}		
+        console.log(msg);
+    }
+}
 
 // To read text from a file
 function readDoc(path){
     try{
-        const data = fs.readFileSync(path, 'utf8');
+        const data = fs.readFileSync(path, "utf8");
         return data;
-    }		
+    }
     catch(err){
-        throw new Error(err);	
-    }	
+        throw new Error(err);
+    }
 }
 
 // To ensure reading when race condition can occur
 // If the path does not exist the program will run indefinitely
 function raceRead(path){
     let flag = true;
-    let data;	
+    let data;
     while(flag){
         try{
             data = readDoc(path);
-            return data; 
+            return data;
         }
         catch{
             // Do nothing
             flag = true;
-        }	
+        }
     }
     return data;
-}	
+}
 
 // To get command line options
 function getOptions(args){
-    let optionArgs = [];	
+    let optionArgs = [];
     let i = 0;
     while(i < args.length && i >= 0){
-        if(args[i][0] == '-'){
+        if(args[i][0] == "-"){
             optionArgs.push(args[i]);
-            args.splice(i, 1);	
+            args.splice(i, 1);
             i --;
         }
         else{
             i ++;
         }
-    }	
+    }
     return optionArgs;
 }
 
@@ -71,6 +71,6 @@ function sendMsg(socketServer, msg){
             client.send(msg);
         }
     });
-}		
+}
 
 export {getDetails, readDoc, getOptions, sendMsg, raceRead};

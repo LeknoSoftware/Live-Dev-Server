@@ -17,6 +17,6 @@ class InvalidOptionError extends Error{
         super(message);
         this.name = "InvalidOptionError";
     }
-}	
+}
 
 export {CannotRunServerError, CannotFindFileError, InvalidOptionError};

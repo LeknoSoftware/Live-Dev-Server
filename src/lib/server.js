@@ -12,7 +12,7 @@ class Server{
 
     constructor(){
         this.PORT = 3000;
-        this.file = undefined;	
+        this.file = undefined;
     }
     // Method to run the server
     run(){
@@ -20,20 +20,20 @@ class Server{
         const __present_dirname = import.meta.dirname;
         if(! fs.existsSync(__dirname + "/" + this.file)){
             throw new CannotFindFileError(`Cannot find the file in ${__dirname + "/" + this.file}`);
-        }	    
+        }
         Server.app.get(`/${this.file}`, (req, res) => {
             let content = raceRead(__dirname + `/${this.file}`);
-            let additional = readDoc(__present_dirname + "/../assets/socket.html");	
+            let additional = readDoc(__present_dirname + "/../assets/socket.html");
             content  = content + additional;
-            res.send(content);	
-        });		
-        Server.app.get('/', (req, res) => {
+            res.send(content);
+        });
+        Server.app.get("/", (req, res) => {
             res.redirect(`/${this.file}`);
-        });    
-        Server.app.use(express.static(__dirname,{index: this.file}));
+        });
+        Server.app.use(express.static(__dirname, {index: this.file}));
         Server.listener = Server.app.listen(this.PORT, (error) => {
             if(! error){
-                const msg = chalk.green(`Started live dev server at port ${this.PORT}.`);	
+                const msg = chalk.green(`Started live dev server at port ${this.PORT}.`);
                 console.log(msg);
             }
             else{
@@ -44,7 +44,7 @@ class Server{
 
     close(){
         Server.listener.close();
-    }		
+    }
 }
 
 export default Server;
