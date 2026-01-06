@@ -16,7 +16,7 @@
   "type": "module",
   "version": "1.0.0",
   "description": "A live web server for development",
-  "author": "",
+  "author": "Lekno Software",
   "license": "MIT",
   "devDependencies": {
     "@stylistic/eslint-plugin": "^5.6.1",
