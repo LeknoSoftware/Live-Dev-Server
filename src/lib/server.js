@@ -1,3 +1,4 @@
+import path from "path";
 import process from "process";
 import fs from "node:fs";
 import express from "express";
@@ -18,12 +19,13 @@ class Server{
     run(){
         const __dirname = process.cwd();
         const __present_dirname = import.meta.dirname;
-        if(! fs.existsSync(__dirname + "/" + this.file)){
-            throw new CannotFindFileError(`Cannot find the file in ${__dirname + "/" + this.file}`);
+	let filePath = path.join(__dirname, this.file);    
+        if(! fs.existsSync(filePath)){
+            throw new CannotFindFileError(`Cannot find the file in ${filePath}`);
         }
         Server.app.get(`/${this.file}`, (req, res) => {
-            let content = raceRead(__dirname + `/${this.file}`);
-            let additional = readDoc(__present_dirname + "/../assets/socket.html");
+            let content = raceRead(filePath);
+            let additional = readDoc(path.join(__present_dirname, "/../assets/socket.html"));
             content  = content + additional;
             res.send(content);
         });
