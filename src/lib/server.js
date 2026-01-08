@@ -23,14 +23,14 @@ class Server{
         if(! fs.existsSync(filePath)){
             throw new CannotFindFileError(`Cannot find the file in ${filePath}`);
         }
-        Server.app.get(`/${this.file}`, (req, res) => {
+        Server.app.get(`/${path.join(this.file)}`, (req, res) => {
             let content = raceRead(filePath);
             let additional = readDoc(path.join(__present_dirname, "/../assets/socket.html"));
             content  = content + additional;
             res.send(content);
         });
         Server.app.get("/", (req, res) => {
-            res.redirect(`/${this.file}`);
+            res.redirect(`/${path.join(this.file)}`);
         });
         Server.app.use(express.static(__dirname, {index: this.file}));
         Server.listener = Server.app.listen(this.PORT, (error) => {
