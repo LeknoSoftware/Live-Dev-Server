@@ -22,7 +22,7 @@
     "housecat": "bin/index.js"
   },
   "type": "module",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "A live web server for development",
   "author": "Lekno Software",
   "license": "MIT",
