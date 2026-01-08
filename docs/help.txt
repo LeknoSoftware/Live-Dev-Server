@@ -1,9 +1,15 @@
+
+This is housecat, a live server for development of web software.
+
 Usage:
 
 housecat <abc> ....................... load the file <abc> on port 3000(default)
 housecat <abc> <port> ................ load the file <abc> on port <port>
 
+Note: housecat can only run files in the current directory.
+ 
 Examples:
 $ housecat index.html 
 $ housecat index.html 5000
-     
+
+You can get this help message anytime through 'housecat --help' or 'housecat -h'      
