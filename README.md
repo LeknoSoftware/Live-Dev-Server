@@ -27,7 +27,9 @@ cd housecat
 npm install -g
 ```
 ## Usage
-Housecat provides a command line tool named `housecat`.   
+Housecat provides a command line tool named `housecat`.    
+
+All `html` pages of the current directory get live reloaded using housecat(from v1.1.0).
 
 Navigate to your project directory.  
 To run a file, say `path/to/index.html`, just run the command:
@@ -55,6 +57,7 @@ That's it! All your changes will get reflected without manual reloading.
 
 ## LICENSE
 This project is MIT licensed. See the [LICENSE](LICENSE) file.
+
 
 
 
