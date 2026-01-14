@@ -19,15 +19,15 @@ class Server{
     run(){
         const __dirname = process.cwd();
         const __present_dirname = import.meta.dirname;
-		let initialPath = path.join(__dirname, this.file);  
+        let initialPath = path.join(__dirname, this.file);
         if(! fs.existsSync(initialPath)){
             throw new CannotFindFileError(`Cannot find the file in ${filePath}`);
         }
 
-		let socket = readDoc(path.join(__present_dirname, "/../assets/socket.html"));
+        let socket = readDoc(path.join(__present_dirname, "/../assets/socket.html"));
 
         Server.app.get("/{*splat}.html", (req, res) => {
-			let filePath = path.join(__dirname, req.path);
+            let filePath = path.join(__dirname, req.path);
             let content = raceRead(filePath);
             content  = content + socket;
             res.send(content);
