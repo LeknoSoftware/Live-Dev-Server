@@ -1,5 +1,5 @@
 # Housecat
-Housecat is a live server for developing web software. 
+Housecat is a live server for web development. 
 Built using *Node.js*.
 
 ## Why?
@@ -57,6 +57,7 @@ That's it! All your changes will get reflected without manual reloading.
 
 ## LICENSE
 This project is MIT licensed. See the [LICENSE](LICENSE) file.
+
 
 
 
