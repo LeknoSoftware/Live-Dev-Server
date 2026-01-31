@@ -1,11 +1,10 @@
-import {WebSocketServer} from "ws";
 import chokidar from "chokidar";
 import chalk from "chalk";
 
 import {Server, getDetails, options} from "./index.js";
-import {getOptions, sendMsg} from "./index.js";
+import {getOptions, sendMsg, socketConnection} from "./index.js";
 
-function run(args){
+export default async function run(args){
     const optionArgs = getOptions(args);
     options(optionArgs);
     if(! args[2] && optionArgs.length == 0){
@@ -16,10 +15,10 @@ function run(args){
     if(! args[2]){
         return;
     }
-    const socketServer = new WebSocketServer({port: 8080});
+    const socketServer = await socketConnection(8080);
     const server = new Server();
-    getDetails(server, args);
-    server.run();
+    await getDetails(server, args);
+    server.run(socketServer.options.port);
     chokidar.watch(".", {
         ignoreInitial: true,
         awaitWriteFinish: true,
@@ -31,5 +30,3 @@ function run(args){
         sendMsg(socketServer, "refresh");
     });
 }
-
-export default run;

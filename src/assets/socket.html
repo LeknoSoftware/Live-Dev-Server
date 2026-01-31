@@ -2,7 +2,6 @@
 <script>
 	const wsUri = "ws://localhost:8080";
 	const websocket = new WebSocket(wsUri);
-	console.log("Working");
 	websocket.addEventListener("message", (e) => {
 		if(e.data == "refresh"){
 			window.location.reload();

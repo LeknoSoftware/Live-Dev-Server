@@ -7,16 +7,16 @@ import chalk from "chalk";
 import {CannotRunServerError, CannotFindFileError} from "./errors.js";
 import {readDoc, raceRead} from "./utils.js";
 
-class Server{
+export default class Server{
     static app = express();
     static listener;
 
     constructor(){
-        this.PORT = 3000;
+        this.PORT = undefined;
         this.file = undefined;
     }
     // Method to run the server
-    run(){
+    run(socketPort){
         const __dirname = process.cwd();
         const __present_dirname = import.meta.dirname;
         let initialPath = path.join(__dirname, this.file);
@@ -25,6 +25,7 @@ class Server{
         }
 
         let socket = readDoc(path.join(__present_dirname, "/../assets/socket.html"));
+        socket = socket.replace("8080", socketPort);
 
         Server.app.get("/{*splat}.html", (req, res) => {
             let filePath = path.join(__dirname, req.path);
@@ -51,6 +52,3 @@ class Server{
         Server.listener.close();
     }
 }
-
-export default Server;
-

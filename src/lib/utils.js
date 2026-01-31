@@ -1,14 +1,18 @@
 import fs from "node:fs";
-import WebSocket from "ws";
+import http from "node:http";
+import WebSocket, {WebSocketServer} from "ws";
 import chalk from "chalk";
 
+import {WebSocketConnectionError, CannotRunServerError} from "./errors.js";
+
 // To fetch details about file and server from the command line arguments
-function getDetails(server, args){
+export async function getDetails(server, args){
     if(args[2]){
         server.file = args[2];
     }
     if(! args[3]){
-        let msg = chalk.yellow("Trying to start server at port 3000....");
+        server.PORT = await getPort(3000);
+        let msg = chalk.yellow(`Trying to start server at port ${server.PORT}....`);
         console.log(msg);
     }
     else{
@@ -19,7 +23,7 @@ function getDetails(server, args){
 }
 
 // To read text from a file
-function readDoc(path){
+export function readDoc(path){
     try{
         const data = fs.readFileSync(path, "utf8");
         return data;
@@ -31,7 +35,7 @@ function readDoc(path){
 
 // To ensure reading when race condition can occur
 // If the path does not exist the program will run indefinitely
-function raceRead(path){
+export function raceRead(path){
     let flag = true;
     let data;
     while(flag){
@@ -39,16 +43,13 @@ function raceRead(path){
             data = readDoc(path);
             return data;
         }
-        catch{
-            // Do nothing
-            flag = true;
-        }
+        catch{}
     }
     return data;
 }
 
 // To get command line options
-function getOptions(args){
+export function getOptions(args){
     let optionArgs = [];
     let i = 0;
     while(i < args.length && i >= 0){
@@ -65,7 +66,7 @@ function getOptions(args){
 }
 
 //To send message
-function sendMsg(socketServer, msg){
+export function sendMsg(socketServer, msg){
     socketServer.clients.forEach((client) => {
         if (client.readyState === WebSocket.OPEN) {
             client.send(msg);
@@ -73,4 +74,51 @@ function sendMsg(socketServer, msg){
     });
 }
 
-export {getDetails, readDoc, getOptions, sendMsg, raceRead};
+// To get the first available port
+export async function getPort(startPort){
+    const portLimit = 65000;
+    for(let i = startPort; i < portLimit; i ++){
+        try{
+            const httpServer = http.createServer();
+            httpServer.listen(i);
+            await connect(httpServer);
+            httpServer.close();
+            return i;
+        }
+        catch{}
+    }
+    throw new CannotRunServerError("Failed to run the server");
+}
+
+// To connect to socket
+export async function socketConnection(startPort){
+    const portLimit = 65000;
+    for(let i = startPort; i < portLimit; i ++){
+        try{
+            const socketServer = new WebSocketServer({port: i});
+            await connect(socketServer);
+            return socketServer;
+        }
+        catch{}
+    }
+    throw new WebSocketConnectionError("Failed to estbalish a web socket connection");
+}
+
+// To check if the connection is successful
+function connect(server){
+    // Remove all listeners
+    const connectPromise = new Promise((resolve, reject) => {
+        server.once("listening", () => {
+            server.removeAllListeners("listening", () => {});
+            server.removeAllListeners("error", () => {});
+            resolve()
+        });
+        server.once("error", () => {
+            server.removeAllListeners("listening", () => {});
+            server.removeAllListeners("errors", () => {});
+            reject(new Error())
+        });
+    });
+    return connectPromise;
+
+}
