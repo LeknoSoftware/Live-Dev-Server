@@ -17,6 +17,9 @@ export default defineConfig([
             "stylistic/quotes": ["error", "double"],
             "stylistic/comma-spacing": ["error", { "before": false, "after": true}],
             "stylistic/brace-style": ["error", "stroustrup"],
+            "stylistic/eol-last": ["error", "always"],
+            "stylistic/no-trailing-spaces": "error",
+            "stylistic/arrow-parens": ["error", "always"]
         },
 
     },
