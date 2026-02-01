@@ -27,7 +27,7 @@ function check(err, res){
     if(data != res.text){
         throw new Error("Received text different from expected text");
     }
-    log("Test for checking webpage loading passed!");
+    log("Test for checking webpage loading passed.");
     if(Server.listener){
         Server.close();
     }
