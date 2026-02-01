@@ -31,6 +31,10 @@
   "devDependencies": {
     "@stylistic/eslint-plugin": "^5.6.1",
     "eslint": "^9.39.2",
+    "mocha": "^11.7.5",
     "supertest": "^7.2.2"
+  },
+  "scripts": {
+    "test": "mocha --exclude ./testPage; node test/testPage/testServer.js"
   }
 }

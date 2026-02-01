@@ -21,7 +21,7 @@ export default class Server{
         const __present_dirname = import.meta.dirname;
         let initialPath = path.join(__dirname, this.file);
         if(! fs.existsSync(initialPath)){
-            throw new CannotFindFileError(`Cannot find the file in ${filePath}`);
+            throw new CannotFindFileError(`Cannot find the file in ${initialPath}`);
         }
 
         let socket = readDoc(path.join(__present_dirname, "/../assets/socket.html"));
