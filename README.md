@@ -4,7 +4,10 @@ Built using *Node.js*.
 
 ## Why?
 **Housecat** is developed with the aim of it being a server for web development.
-It reloads the webpage each time any change occurs in the directory.  
+It reloads the webpage each time any change occurs in the directory. 
+
+Multiple live servers can be there simultaneously(from v2.0.0).
+
 It provides a command line tool named `housecat`.
 
 ## Installation
@@ -43,6 +46,9 @@ To use any other port, say *5000* for the file `path/to/index.html`, just run:
 ```sh
 housecat path/to/index.html 5000
 ```
+
+You can also start multiple live servers simultaneously(from v2.0.0). Then, `housecat` will select the port by itself.
+
 For help, run:
 ```sh
 housecat --help
@@ -57,6 +63,7 @@ That's it! All your changes will get reflected without manual reloading.
 
 ## LICENSE
 This project is MIT licensed. See the [LICENSE](LICENSE) file.
+
 
 
 
